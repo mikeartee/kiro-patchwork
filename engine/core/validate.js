@@ -25,7 +25,13 @@ import {
   parseBoardEntry,
   parseRemediationStep,
   isSchemaError,
+  RESOLUTION_ARTIFACTS,
 } from './schema.js';
+import { validatePostmortem } from './postmortem.js';
+
+// Re-export RESOLUTION_ARTIFACTS so existing consumers (tests, adapters) that
+// import from validate.js continue to work without breakage.
+export { RESOLUTION_ARTIFACTS };
 
 /**
  * @typedef {Object} WorkspaceSnapshot
@@ -59,19 +65,6 @@ import {
  * @property {string} rule    Stable, machine-readable id of the broken rule.
  * @property {string} message Human-readable description of the problem.
  */
-
-/**
- * The artifact set a resolution-stage (RESOLVED) Incident_Directory must hold
- * (Requirement 1.4; design "Data Models › Workspace layout").
- */
-export const RESOLUTION_ARTIFACTS = Object.freeze([
-  'incident.md',
-  'analysis.md',
-  'fix-proposal.md',
-  'review.md',
-  'decision-log.md',
-  'postmortem.md',
-]);
 
 const WORKSPACE_ROOT = 'patchwork';
 const BOARD_PATH = `${WORKSPACE_ROOT}/board.md`;
@@ -222,6 +215,14 @@ function validateIncident(id, files, problems) {
             `Resolution-stage incident is missing required artifact ${artifact}`,
           ),
         );
+      }
+    }
+
+    // 3d. When postmortem.md is present, validate its structure (Req 7.3, 7.4).
+    if (typeof fileMap['postmortem.md'] === 'string') {
+      const pmResult = validatePostmortem(fileMap['postmortem.md'], { incidentId: id });
+      for (const p of pmResult.problems) {
+        problems.push(p);
       }
     }
   }

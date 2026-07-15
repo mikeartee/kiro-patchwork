@@ -17,6 +17,21 @@
 const DOT = '\u00B7';
 
 /**
+ * The artifact set a resolution-stage (RESOLVED) Incident_Directory must hold
+ * (Requirement 1.4; design "Data Models › Workspace layout"). Placed here in
+ * schema.js because it is data-model knowledge consumed by validate, the
+ * workspace reader, and the dashboard — not validation logic per se.
+ */
+export const RESOLUTION_ARTIFACTS = Object.freeze([
+  'incident.md',
+  'analysis.md',
+  'fix-proposal.md',
+  'review.md',
+  'decision-log.md',
+  'postmortem.md',
+]);
+
+/**
  * The ordered Incident_Status enum. Any status outside this set is a schema
  * violation (Requirements 1.3, 3).
  */

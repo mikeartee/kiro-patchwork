@@ -17,10 +17,8 @@
 import { pathToFileURL } from 'node:url';
 
 import { validate } from './core/validate.js';
-import { gate } from './core/gate.js';
-import { verdict } from './core/verdict.js';
-import { parseIncident, isSchemaError } from './core/schema.js';
 import { readWorkspace, DEFAULT_WORKSPACE } from './read-workspace.js';
+import { resolveAndGate, resolveAndVerdict } from './resolve-incident.js';
 
 // The workspace directory defaults to `patchwork/` (design CLI signature:
 // `patchwork validate [--workspace <dir>]`); DEFAULT_WORKSPACE is now shared
@@ -58,6 +56,34 @@ function usage() {
 }
 
 /**
+ * Parse CLI flags from an argv array. Supports both `--flag <value>` and
+ * `--flag=<value>` forms. Returns an object with each declared flag name as a
+ * key, set to its value or null when the flag was not supplied.
+ *
+ * @param {string[]} args argv after the command name.
+ * @param {string[]} flagNames the flag names this command accepts (without --).
+ * @returns {Object<string, string|null>}
+ */
+function parseFlags(args, flagNames) {
+  const options = Object.fromEntries(flagNames.map((f) => [f, null]));
+  for (let i = 0; i < args.length; i++) {
+    for (const name of flagNames) {
+      const dashed = `--${name}`;
+      if (args[i] === dashed) {
+        options[name] = args[i + 1];
+        i++;
+        break;
+      }
+      if (args[i].startsWith(`${dashed}=`)) {
+        options[name] = args[i].slice(dashed.length + 1);
+        break;
+      }
+    }
+  }
+  return options;
+}
+
+/**
  * Parse the options accepted by the `validate` command.
  *
  * Supports both `--workspace <dir>` and `--workspace=<dir>`. When the flag is
@@ -67,17 +93,7 @@ function usage() {
  * @returns {{ workspace: string|null }}
  */
 function parseValidateArgs(args) {
-  const options = { workspace: null };
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    if (arg === '--workspace') {
-      options.workspace = args[i + 1];
-      i++;
-    } else if (arg.startsWith('--workspace=')) {
-      options.workspace = arg.slice('--workspace='.length);
-    }
-  }
-  return options;
+  return parseFlags(args, ['workspace']);
 }
 
 /**
@@ -133,27 +149,7 @@ function runValidate(args) {
  * @returns {{ incident: string|null, to: string|null, workspace: string|null }}
  */
 function parseGateArgs(args) {
-  const options = { incident: null, to: null, workspace: null };
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    if (arg === '--incident') {
-      options.incident = args[i + 1];
-      i++;
-    } else if (arg.startsWith('--incident=')) {
-      options.incident = arg.slice('--incident='.length);
-    } else if (arg === '--to') {
-      options.to = args[i + 1];
-      i++;
-    } else if (arg.startsWith('--to=')) {
-      options.to = arg.slice('--to='.length);
-    } else if (arg === '--workspace') {
-      options.workspace = args[i + 1];
-      i++;
-    } else if (arg.startsWith('--workspace=')) {
-      options.workspace = arg.slice('--workspace='.length);
-    }
-  }
-  return options;
+  return parseFlags(args, ['incident', 'to', 'workspace']);
 }
 
 /**
@@ -193,40 +189,7 @@ function runGate(args) {
 
   const snapshot = readWorkspace(workspaceDir);
 
-  // Resolve the transition's `from` = the incident's current status, read from
-  // its incident.md frontmatter. `from` stays null until we successfully parse
-  // it so the JSON line always reports what we resolved.
-  let from = null;
-  let result;
-
-  const incidentFiles =
-    snapshot.incidents && snapshot.incidents[incidentId]
-      ? snapshot.incidents[incidentId]
-      : null;
-
-  if (incidentFiles === null) {
-    result = {
-      allowed: false,
-      reason: `incident "${incidentId}" not found in workspace "${workspaceDir}"`,
-    };
-  } else if (typeof incidentFiles['incident.md'] !== 'string') {
-    result = {
-      allowed: false,
-      reason: `incident "${incidentId}" is missing incident.md`,
-    };
-  } else {
-    const parsed = parseIncident(incidentFiles['incident.md']);
-    if (isSchemaError(parsed)) {
-      result = {
-        allowed: false,
-        reason: `incident "${incidentId}" has invalid frontmatter: ${parsed.message}`,
-      };
-    } else {
-      from = parsed.status;
-      // Core call — transition legality (plus the RESOLVED guard from task 3.2).
-      result = gate(snapshot, { incidentId, from, to });
-    }
-  }
+  const { from, result } = resolveAndGate(snapshot, { incidentId, to, workspaceDir });
 
   // Human-readable summary. Uses ASCII "->" for portable console output.
   const edge = `${from ?? '?'} -> ${to}`;
@@ -264,22 +227,7 @@ function runGate(args) {
  * @returns {{ incident: string|null, workspace: string|null }}
  */
 function parseVerdictArgs(args) {
-  const options = { incident: null, workspace: null };
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    if (arg === '--incident') {
-      options.incident = args[i + 1];
-      i++;
-    } else if (arg.startsWith('--incident=')) {
-      options.incident = arg.slice('--incident='.length);
-    } else if (arg === '--workspace') {
-      options.workspace = args[i + 1];
-      i++;
-    } else if (arg.startsWith('--workspace=')) {
-      options.workspace = arg.slice('--workspace='.length);
-    }
-  }
-  return options;
+  return parseFlags(args, ['incident', 'workspace']);
 }
 
 /**
@@ -315,18 +263,7 @@ function runVerdict(args) {
 
   const snapshot = readWorkspace(workspaceDir);
 
-  // A missing incident or a missing review.md leaves reviewText undefined,
-  // which parseVerdict maps to NEEDS_WORK (fail-closed).
-  const incidentFiles =
-    snapshot.incidents && snapshot.incidents[incidentId]
-      ? snapshot.incidents[incidentId]
-      : null;
-  const reviewText =
-    incidentFiles && typeof incidentFiles['review.md'] === 'string'
-      ? incidentFiles['review.md']
-      : undefined;
-
-  const result = verdict(reviewText);
+  const result = resolveAndVerdict(snapshot, incidentId);
 
   // Human-readable summary.
   console.log(`verdict: ${result.verdict} - ${incidentId}`);

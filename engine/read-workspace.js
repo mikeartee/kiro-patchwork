@@ -19,7 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { RESOLUTION_ARTIFACTS } from './core/validate.js';
+import { RESOLUTION_ARTIFACTS } from './core/schema.js';
 
 // The workspace directory is `patchwork/` relative to the current working
 // directory unless a caller overrides it (CLI `--workspace <dir>`, MCP
