@@ -121,6 +121,39 @@ repository, each contribution is attributed to a distinct commit author, and the
 append-only Board (`patchwork/board.md`) keeps a visible, chronological record
 of who did what across incidents.
 
+### Connecting external agents (Slack, Discord, etc.)
+
+The protocol engine is transport-agnostic. Any agent that can commit to the
+shared git repo and either call the MCP server or shell out to the CLI can
+participate alongside the Kiro-based agents. A Slack bot, for example, could:
+
+1. **File incidents** — watch a channel for a trigger phrase, scaffold the
+   incident directory via the `/incident` logic, commit, and push.
+2. **Relay triage questions** — after `/analyze`, post the SRE's 2–3 questions
+   into the channel and wait for the Commander's reply.
+3. **Post verdicts** — notify the channel when the Reviewer writes a `PASS` or
+   `NEEDS_WORK`.
+4. **Clear HITL steps** — surface each human-only step as a Slack action button
+   and record the clearance in the workspace on confirmation.
+
+The key constraints for any external participant:
+
+- **All writes go through git.** The Board is append-only, the gate is
+  deterministic, and the guardrail hook enforces transitions. The bot commits
+  and pushes like any other participant.
+- **Self-check with the engine.** Call `node engine/cli.js validate` (or the
+  MCP `validate` tool) after writing, and `gate` before advancing status. The
+  engine doesn't care *who* writes — it cares that the schema is valid and the
+  state machine rules are met.
+- **Attribute correctly.** Each Board entry carries the `@handle` of the actor
+  and whether it's `(human)` or `(agent)`. A bot should use its own handle
+  (e.g. `@patchwork-slackbot`) and tag itself as `(agent)`.
+
+This means the architecture scales from a single developer testing locally to a
+distributed team with heterogeneous agents (IDE, CLI, chat bots, CI pipelines)
+without changing the protocol — only the transport between the agent and the
+repo changes.
+
 ## Running the demo
 
 The repository ships a seeded incident, `INC-2024-001` ("Checkout endpoint
