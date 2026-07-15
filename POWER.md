@@ -4,7 +4,6 @@ displayName: "Kiro Patchwork"
 description: "Kiro Patchwork turns incident response into a shared, file-based workspace where a human Incident Commander and three scoped agents (SRE, Reviewer, Scribe) drive an incident from first symptom to a reviewed, staged fix and a compiled post-mortem. A deterministic protocol engine enforces the workspace schema, the incident state machine, and a fail-closed review gate, exposed as both a CLI and this MCP server. Multiplayer runs through shared git history and distinct commit authors, so a whole team installs identical agent behavior against one repo."
 keywords: ["incident", "outage", "500", "error", "rca", "root cause", "postmortem", "sre"]
 author: "Kiro Patchwork Team"
-icon: "logo.png"
 ---
 
 # Kiro Patchwork
