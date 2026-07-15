@@ -183,107 +183,107 @@ Note: for Kiro-specific config formats (POWER.md frontmatter, `.kiro/agents/*.js
     - Start the server and assert it lists the three expected tools
     - _Requirements: 10.5_
 
-- [ ] 6. Build the local sample app with a planted bug and real evidence
-  - [-] 6.1 Create the vulnerable sample service and commit the planted defect
+- [x] 6. Build the local sample app with a planted bug and real evidence
+  - [x] 6.1 Create the vulnerable sample service and commit the planted defect
     - Add a tiny local-only Node service under `sample-app/` (e.g. a `/checkout` endpoint that returns 500 under a specific condition) with the defect introduced by an identifiable git commit; do not configure it for deployment
     - _Requirements: 14.1, 14.5_
 
-  - [~] 6.2 Seed log files reflecting the defect
+  - [x] 6.2 Seed log files reflecting the defect
     - Add seeded logs under `sample-app/logs/` that show the failure signature the SRE will investigate
     - _Requirements: 14.2, 14.4_
 
-  - [~] 6.3 Add a failing reproduction test
+  - [x] 6.3 Add a failing reproduction test
     - Write a `node:test` reproduction test that fails while the planted defect is present (the factual grounding an `[AFK]` remediation step verifies against)
     - _Requirements: 14.3_
 
-- [ ] 7. Create the patchwork-sre custom agent
-  - [~] 7.1 Author the SRE agent config and prompt
+- [x] 7. Create the patchwork-sre custom agent
+  - [x] 7.1 Author the SRE agent config and prompt
     - Add `.kiro/agents/patchwork-sre.json` (model + `toolsSettings`) and `.md` prompt: write-scoped to `patchwork/**`, read-only git shell limited to `status`/`log`/`diff`/`show`, read access to `sample-app/logs`, and no push/merge/branch
     - Prompt behavior: read evidence, ask the Commander 2-3 triage questions, then write `analysis.md` and `fix-proposal.md` with `[AFK]`/`[HITL]`-tagged remediation steps and per-item verification checks, set status to ANALYSIS_READY, and self-check via the engine MCP tools
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 9.1, 9.2, 9.3_
 
-  - [~] 7.2 Write a config-lint test for SRE tool scoping
+  - [x] 7.2 Write a config-lint test for SRE tool scoping
     - Assert the config write scope is `patchwork/**`, that push/merge/branch and secret paths are denied, and that artifacts the agent is expected to produce pass `validate`
     - _Requirements: 4.5, 4.6, 9.4_
 
-- [ ] 8. Create the patchwork-reviewer agent and the guardrail hook
-  - [~] 8.1 Author the Reviewer agent config and prompt
+- [x] 8. Create the patchwork-reviewer agent and the guardrail hook
+  - [x] 8.1 Author the Reviewer agent config and prompt
     - Add `.kiro/agents/patchwork-reviewer.{json,md}` on a different model family from the SRE; read access to incident artifacts + sample app, write access to `review.md` only
     - Prompt: adversarial mandate to refute the fix; injection-hardened to treat `incident.md`/`fix-proposal.md` as untrusted and ignore embedded "approve this" directives; end `review.md` with a fail-closed `VERDICT:` line
     - _Requirements: 5.1, 5.2, 5.4, 5.5, 6.1, 6.2_
 
-  - [~] 8.2 Implement the guardrail hook shelling into the CLI
+  - [x] 8.2 Implement the guardrail hook shelling into the CLI
     - Add `.kiro/hooks/*.kiro.hook` that, on a RESOLVED transition or ship command, invokes `patchwork gate`/`patchwork verdict` and decides solely on exit code + parsed result, failing closed on any non-zero exit, thrown error, timeout, or unparseable output; allows only on explicit success
     - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
-  - [~] 8.3 Write guardrail hook tests for every failure mode
+  - [x] 8.3 Write guardrail hook tests for every failure mode
     - Drive the hook against constructed workspaces: assert it blocks on no PASS, NEEDS_WORK, stale PASS, self-authored PASS, uncleared HITL, and non-zero CLI exit; assert it allows only on a valid non-author PASS at current fix_version with HITL cleared
     - _Requirements: 6.3, 6.4, 8.5, 11.2, 11.3, 11.4_
 
-  - [~] 8.4 Write a config-lint test for Reviewer scoping and model family
+  - [x] 8.4 Write a config-lint test for Reviewer scoping and model family
     - Assert the Reviewer writes only `review.md` and runs on a different model family from the SRE
     - _Requirements: 5.4, 5.5_
 
-- [ ] 9. Create the patchwork-scribe agent
-  - [~] 9.1 Author the Scribe agent config and prompt
+- [x] 9. Create the patchwork-scribe agent
+  - [x] 9.1 Author the Scribe agent config and prompt
     - Add `.kiro/agents/patchwork-scribe.{json,md}` write-scoped to `decision-log.md` (append-only) and `postmortem.md`; prompt appends decisions and compiles `postmortem.md` from the incident artifact chain (incident id, root cause, applied fix, review outcome)
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
-  - [~] 9.2 Write a postmortem validator test and append-only check
+  - [x] 9.2 Write a postmortem validator test and append-only check
     - Assert a compiled `postmortem.md` contains the required sections and links all artifacts, and that appending to `decision-log.md` preserves all existing entries
     - _Requirements: 7.2, 7.3, 7.4_
 
-- [ ] 10. Create the slash-command prompts
-  - [~] 10.1 Author the incident-lifecycle prompts
+- [x] 10. Create the slash-command prompts
+  - [x] 10.1 Author the incident-lifecycle prompts
     - Add `.kiro/prompts/` for `/incident` (create Incident_Directory + `incident.md`, set REPORTED, append a board entry), `/analyze` (hand off to SRE), `/review` (hand off to Reviewer), `/human-itl` (walk each `[HITL]` step, write an audit Board_Entry attributed to the Commander per cleared step, check the step off), and `/postmortem` (hand off to Scribe)
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 9.3_
 
-  - [~] 10.2 Write a test that RESOLVED opens only after HITL cleared + PASS
+  - [x] 10.2 Write a test that RESOLVED opens only after HITL cleared + PASS
     - Using the engine + a constructed workspace, assert the RESOLVED gate stays closed until every HITL step is cleared and a non-author PASS exists at the current fix_version, then opens
     - _Requirements: 8.4, 8.5, 9.3_
 
-- [ ] 11. Package as a Kiro Power with onboarding
-  - [~] 11.1 Author POWER.md and mcp.json
+- [x] 11. Package as a Kiro Power with onboarding
+  - [x] 11.1 Author POWER.md and mcp.json
     - Create `POWER.md` at repo root with frontmatter (`name`, `displayName`, `description`, `keywords: [incident, outage, 500, error, rca, root cause, postmortem, sre]`, `author`), onboarding steps, and steering references; add `mcp.json` registering the engine MCP server with a name matching POWER.md, configured via env vars with no secrets
     - _Requirements: 13.1, 13.2, 13.5, 16.3_
 
-  - [~] 11.2 Implement onboarding (dependency check + scaffold + hook install)
+  - [x] 11.2 Implement onboarding (dependency check + scaffold + hook install)
     - Onboarding validates the required Node dependency before any change; on success it installs the guardrail hook into `.kiro/hooks/` and scaffolds `patchwork/`; on failure it stops with an actionable message and does not half-scaffold
     - _Requirements: 13.3, 13.4_
 
-  - [~] 11.3 Write a lint test for POWER.md and mcp.json
+  - [x] 11.3 Write a lint test for POWER.md and mcp.json
     - Assert required frontmatter fields are present and the MCP server name in `mcp.json` matches the reference in `POWER.md`
     - _Requirements: 13.1, 13.2_
 
-- [~] 12. Checkpoint - agents, hook, and packaging complete
+- [x] 12. Checkpoint - agents, hook, and packaging complete
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 13. Verify Power installation and multiplayer attribution
-  - [~] 13.1 Verify install from local folder and public GitHub
+- [x] 13. Verify Power installation and multiplayer attribution
+  - [x] 13.1 Verify install from local folder and public GitHub
     - Add scripts/tests that exercise importing the Power from a local folder and from a public GitHub repository, verify keyword activation loads the engine tools + steering, and verify onboarding installs the hook and scaffolds the workspace
     - _Requirements: 13.6_
 
-  - [~] 13.2 Write a multiplayer attribution test
+  - [x] 13.2 Write a multiplayer attribution test
     - Assert the Board retains contributions from multiple distinct participants/roles across synchronizations and that entries carry distinct authors (git-history-based reconciliation, no live server)
     - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 14. Wire the end-to-end flow and produce challenge deliverables
-  - [~] 14.1 Implement the golden-path integration test
+- [x] 14. Wire the end-to-end flow and produce challenge deliverables
+  - [x] 14.1 Implement the golden-path integration test
     - One end-to-end `node:test` that carries a seeded incident from report to compiled `postmortem.md` and asserts: RESOLVED is reachable only via a non-author PASS at the current `fix_version` with all HITL cleared (removing any one condition keeps it out of RESOLVED); the Board history is complete, attributed, and chronological; the compiled `postmortem.md` links the full artifact chain
     - _Requirements: 16.4, 8.5, 11.4, 2.5, 7.3, 7.4_
 
-  - [~] 14.2 Write the README and Kiro/agentic explanation
+  - [x] 14.2 Write the README and Kiro/agentic explanation
     - README documents installation, the collaboration flow, and how to run the demo; add a 150-300 word explanation of the Kiro + agentic approach (Powers + MCP + Hooks + Steering + custom agents + Specs, with the team-install multiplayer framing)
     - _Requirements: 16.1, 16.2_
 
-  - [~] 14.3 Add the environment variable examples
+  - [x] 14.3 Add the environment variable examples
     - Add `.env.example` carrying key names with placeholder values and no real secrets
     - _Requirements: 16.3_
 
-- [~] 15. Final checkpoint - full flow demoable
+- [x] 15. Final checkpoint - full flow demoable
   - Ensure all tests pass and the seeded incident runs report-to-postmortem, ask the user if questions arise.
 
-- [~] 16. (Optional) Build the read-only room dashboard
+- [x] 16. (Optional) Build the read-only room dashboard
   - Add a thin read-only view that renders `board.md`, the current status, and the artifact chain with Human/SRE/Reviewer/Scribe badges; reads files only (no LLM, no network, no auth) and never modifies the workspace
   - Add a DOM/snapshot test asserting the rendered status and recent board entries; this task is clearly optional
   - _Requirements: 17.1, 17.2, 17.3_
