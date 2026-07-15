@@ -246,8 +246,17 @@ export function parseBoardEntry(line) {
 // parseRemediationStep
 // ---------------------------------------------------------------------------
 
-// A leading list marker ("- " or "* ") is optional.
-const LIST_MARKER_RE = /^\s*(?:[-*]\s+)?/;
+// A leading list marker ("- " or "* ") is optional, and when present it may be
+// followed by a task checkbox ("[ ]", "[x]", or "[X]"). The checkbox appears
+// when a remediation step uses the /human-itl clear/uncleared form (task 10.1),
+// e.g. "- [x] [HITL] …" (cleared) or "- [ ] [HITL] …" (uncleared). Both the
+// bullet and any checkbox are stripped before the [AFK]/[HITL] tag so a checked
+// or unchecked step parses as the SAME remediation step — its clear-state is
+// the gate's concern (gate.hasUnclearedHitlStep), not the schema's. The checkbox
+// is nested inside the bullet group so it is only consumed after a bullet, and
+// the single-character class [ xX] can never swallow a multi-letter [AFK]/[HITL]
+// tag. This keeps validate() consistent with gate's cleared-detection.
+const LIST_MARKER_RE = /^\s*(?:[-*]\s+(?:\[[ xX]\]\s+)?)?/;
 const TAG_RE = /^\[(AFK|HITL)\]\s*(.*)$/; // tag is case-sensitive / uppercase
 const VERIFY_RE = /verify:\s*(.*)$/i; // the "verify" keyword is case-insensitive
 const TRAILING_SEPARATOR_RE = /[\s\u2014\u2013-]+$/; // em/en dash or hyphen + space
