@@ -23,16 +23,32 @@ export const COUPONS = {
  * Apply zero or more coupon codes to a cart and return the discounted total.
  * Unknown coupon codes are ignored. The total never drops below zero.
  *
+ * Stacked coupons earn a loyalty bonus: each coupon applied on top of a
+ * previous one compounds an extra discount off the previously applied coupon's
+ * tier, rewarding customers who combine offers.
+ *
  * @param {{ subtotal: number }} cart
  * @param {string[]} couponCodes
  * @returns {number} the discounted total, floored at 0.
  */
 export function applyCoupons(cart, couponCodes) {
   let total = cart.subtotal;
+  let lastApplied = null;
   for (const code of couponCodes) {
     const coupon = COUPONS[code];
     if (!coupon) continue; // unknown coupon code: ignore it
-    total -= coupon.discount;
+
+    if (lastApplied === null) {
+      // First coupon: apply its flat discount.
+      total -= coupon.discount;
+    } else {
+      // Stacked coupon: compound a loyalty bonus off the previously applied
+      // coupon's tier, then apply this coupon's discount.
+      const bonus = coupon.discount * lastApplied.tier.multiplier;
+      total -= coupon.discount + bonus;
+    }
+
+    lastApplied = coupon;
   }
   return Math.max(0, total);
 }
