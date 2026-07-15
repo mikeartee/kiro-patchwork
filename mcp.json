@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "patchwork": {
+      "command": "node",
+      "args": ["engine/mcp.js"],
+      "env": {
+        "PATCHWORK_WORKSPACE": "patchwork"
+      },
+      "disabled": false,
+      "autoApprove": ["validate", "gate", "verdict"]
+    }
+  }
+}
