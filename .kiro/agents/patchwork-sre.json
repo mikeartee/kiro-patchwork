@@ -1,0 +1,83 @@
+{
+  "name": "patchwork-sre",
+  "description": "Patchwork SRE agent. Investigates an incident from the shared evidence (sample-app logs + read-only git history), asks the Incident Commander 2-3 triage questions, then authors analysis.md and fix-proposal.md with [AFK]/[HITL]-tagged, verifiable remediation steps and advances the incident to ANALYSIS_READY. Proposes but never ships: write-scoped to patchwork/**, read-only git only, no push/merge/branch.",
+  "prompt": "file://./patchwork-sre.md",
+  "model": "claude-sonnet-4",
+  "mcpServers": {
+    "patchwork": {
+      "command": "node",
+      "args": ["engine/mcp.js"]
+    }
+  },
+  "tools": ["fs_read", "fs_write", "execute_bash", "@patchwork"],
+  "allowedTools": ["@patchwork"],
+  "toolsSettings": {
+    "fs_write": {
+      "allowedPaths": ["patchwork/**"],
+      "deniedPaths": [
+        ".env",
+        ".env.*",
+        "**/.env",
+        "**/.env.*",
+        "**/*.pem",
+        "**/*.key",
+        "**/id_rsa*",
+        "**/id_ed25519*",
+        "**/credentials",
+        "**/secrets/**",
+        "**/.git/**",
+        ".kiro/**",
+        "engine/**",
+        "sample-app/**",
+        "node_modules/**"
+      ]
+    },
+    "fs_read": {
+      "allowedPaths": [
+        "patchwork/**",
+        "sample-app/logs/**",
+        "sample-app/**",
+        ".kiro/specs/**",
+        ".kiro/steering/**"
+      ],
+      "deniedPaths": [
+        ".env",
+        ".env.*",
+        "**/.env",
+        "**/.env.*",
+        "**/*.pem",
+        "**/*.key",
+        "**/id_rsa*",
+        "**/id_ed25519*",
+        "**/credentials",
+        "**/secrets/**"
+      ]
+    },
+    "execute_bash": {
+      "allowedCommands": [
+        "git status[^;&|`$()<>]*",
+        "git log[^;&|`$()<>]*",
+        "git diff[^;&|`$()<>]*",
+        "git show[^;&|`$()<>]*"
+      ],
+      "deniedCommands": [
+        "git push.*",
+        "git merge.*",
+        "git branch.*",
+        "git commit.*",
+        "git checkout.*",
+        "git switch.*",
+        "git reset.*",
+        "git rebase.*",
+        "git tag.*",
+        "git remote.*",
+        "git clean.*",
+        "git stash.*",
+        "git apply.*",
+        "git cherry-pick.*"
+      ],
+      "autoAllowReadonly": false,
+      "denyByDefault": true
+    }
+  }
+}

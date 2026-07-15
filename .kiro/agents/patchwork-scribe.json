@@ -1,0 +1,90 @@
+{
+  "name": "patchwork-scribe",
+  "description": "Patchwork Scribe agent. Maintains the append-only decision-log.md and compiles postmortem.md for an incident (Requirement 7). When a decision is recorded it appends a timestamped, attributed entry to decision-log.md, preserving every prior entry (Reqs 7.1, 7.2); when the incident reaches RESOLVED it compiles postmortem.md from the incident artifact chain (incident.md, analysis.md, fix-proposal.md, review.md, decision-log.md), referencing the incident id, root cause, applied fix, and review outcome (Reqs 7.3, 7.4). Least privilege: read-only everywhere except it may write ONLY the incident's decision-log.md and postmortem.md; read-only git; no push/merge/branch; cannot ship or write any other artifact (including board.md, incident.md, analysis.md, fix-proposal.md, review.md). Runs on claude-sonnet-4 (a compilation/summarization task; unlike the Reviewer it has no different-model-family requirement).",
+  "prompt": "file://./patchwork-scribe.md",
+  "model": "claude-sonnet-4",
+  "mcpServers": {
+    "patchwork": {
+      "command": "node",
+      "args": ["engine/mcp.js"]
+    }
+  },
+  "tools": ["fs_read", "fs_write", "execute_bash", "@patchwork"],
+  "allowedTools": ["@patchwork"],
+  "toolsSettings": {
+    "fs_write": {
+      "allowedPaths": [
+        "patchwork/incidents/**/decision-log.md",
+        "patchwork/incidents/**/postmortem.md"
+      ],
+      "deniedPaths": [
+        "patchwork/board.md",
+        "**/board.md",
+        "**/incident.md",
+        "**/analysis.md",
+        "**/fix-proposal.md",
+        "**/review.md",
+        ".env",
+        ".env.*",
+        "**/.env",
+        "**/.env.*",
+        "**/*.pem",
+        "**/*.key",
+        "**/id_rsa*",
+        "**/id_ed25519*",
+        "**/credentials",
+        "**/secrets/**",
+        "**/.git/**",
+        ".kiro/**",
+        "engine/**",
+        "sample-app/**",
+        "node_modules/**"
+      ]
+    },
+    "fs_read": {
+      "allowedPaths": [
+        "patchwork/**",
+        ".kiro/specs/**",
+        ".kiro/steering/**"
+      ],
+      "deniedPaths": [
+        ".env",
+        ".env.*",
+        "**/.env",
+        "**/.env.*",
+        "**/*.pem",
+        "**/*.key",
+        "**/id_rsa*",
+        "**/id_ed25519*",
+        "**/credentials",
+        "**/secrets/**"
+      ]
+    },
+    "execute_bash": {
+      "allowedCommands": [
+        "git status[^;&|`$()<>]*",
+        "git log[^;&|`$()<>]*",
+        "git diff[^;&|`$()<>]*",
+        "git show[^;&|`$()<>]*"
+      ],
+      "deniedCommands": [
+        "git push.*",
+        "git merge.*",
+        "git branch.*",
+        "git commit.*",
+        "git checkout.*",
+        "git switch.*",
+        "git reset.*",
+        "git rebase.*",
+        "git tag.*",
+        "git remote.*",
+        "git clean.*",
+        "git stash.*",
+        "git apply.*",
+        "git cherry-pick.*"
+      ],
+      "autoAllowReadonly": false,
+      "denyByDefault": true
+    }
+  }
+}
