@@ -1,5 +1,9 @@
 # Kiro Patchwork
 
+<p align="center">
+  <img src="logo.png" alt="Kiro Patchwork logo" width="200">
+</p>
+
 Kiro Patchwork turns incident response into a shared, file-based workspace. A
 human Incident Commander and three scoped AI agents (SRE, Reviewer, Scribe)
 drive an incident from first symptom through an independently reviewed, staged
