@@ -210,11 +210,12 @@ export function gate(workspace, request) {
 //
 //     i.e. an unchecked `[ ]` OR a plain step with no checkbox is UNCLEARED.
 //     This matches the design's `/human-itl` "check the step off" language
-//     (task 10.1). NOTE for tasks 7.1 / 10.1 / 1.2: when fix-proposal.md steps
-//     adopt the `- [ ]` / `- [x]` checkbox form, schema.parseRemediationStep
-//     must be taught to skip a leading task checkbox before the [AFK]/[HITL]
-//     tag, or validate() will misreport those steps as missing their tag. The
-//     guard below scans the raw lines itself and does not depend on that.
+//     (task 10.1). schema.parseRemediationStep now tolerates a leading `- [ ]` /
+//     `- [x]` task checkbox before the [AFK]/[HITL] tag (task 10.2). validate's
+//     looksLikeRemediationStep already recognised such a line as a remediation
+//     step, so before that fix validate() misreported a cleared step as missing
+//     its tag; now the two engine surfaces agree with this guard. The guard
+//     below still scans the raw lines itself and does not depend on that.
 
 /** The middle-dot label parser for the fix-proposal `Author:` line. */
 const FIX_PROPOSAL_AUTHOR_RE = /^\s*Author:\s*@?(.+?)\s*$/i;

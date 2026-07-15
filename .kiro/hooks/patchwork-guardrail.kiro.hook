@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Patchwork Guardrail",
+  "description": "Fail-closed ship gate. Before any shell command runs, evaluates every FIX_STAGED incident's RESOLVED gate via the Patchwork CLI and blocks (exit 2) unless a non-author PASS exists at the current fix_version with all HITL steps cleared. Decides solely on the CLI's exit code and parsed result; blocks on any non-zero exit, timeout, or unparseable output. Requirement 11.",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["shell"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "node .kiro/hooks/patchwork-guardrail.mjs --workspace patchwork"
+  }
+}
