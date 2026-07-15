@@ -1,0 +1,5 @@
+# Dependencies
+node_modules/
+
+# Local environment (real secrets live here; never commit)
+.env

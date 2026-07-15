@@ -1,0 +1,20 @@
+{
+  "name": "kiro-patchwork",
+  "version": "0.1.0",
+  "description": "Kiro Patchwork - a shared, file-based incident-response workspace with a deterministic protocol engine exposed as a CLI and an MCP server.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "patchwork": "engine/cli.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "4.4.3"
+  }
+}

@@ -1,0 +1,542 @@
+{
+  "pbtResults": {
+    "1.6 Write property test: validate is deterministic and order-independent": {
+      "status": "passed",
+      "lastRunTimestamp": 1784080989161
+    },
+    "2.4 Write property test: gate never allows an undefined transition": {
+      "status": "passed",
+      "lastRunTimestamp": 1784082029550
+    },
+    "3.4 Write property test: verdict fails closed for all non-PASS inputs": {
+      "status": "passed",
+      "lastRunTimestamp": 1784084425296
+    }
+  },
+  "executionHistory": {
+    "1.1 Set up the engine project structure": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078658077
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078671615
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784079027257
+      }
+    ],
+    "1.2 Implement the shared schema parsers with TDD": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078658691
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784079031795
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784079581131
+      }
+    ],
+    "1.3 Implement the `validate(workspace)` core function": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078658831
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784079586802
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784079916654
+      }
+    ],
+    "1.4 Implement the `patchwork validate` CLI command": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078658948
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784079922390
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784080181588
+      }
+    ],
+    "1.5 Write unit tests for `validate` and the CLI exit contract": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659014
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784080186573
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784080517398
+      }
+    ],
+    "1.6 Write property test: validate is deterministic and order-independent": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659075
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784080521886
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081028789
+      }
+    ],
+    "2.1 Define the transition table and `gate` transition check": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659128
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081033809
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081272860
+      }
+    ],
+    "2.2 Extend the CLI with the `gate` command": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659181
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081277388
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081595773
+      }
+    ],
+    "2.3 Write unit tests for transition legality": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659236
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081600200
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081809676
+      }
+    ],
+    "2.4 Write property test: gate never allows an undefined transition": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659292
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081814542
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784082067680
+      }
+    ],
+    "3.1 Implement fail-closed `parseVerdict` and the `verdict` core/CLI command": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659348
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784082072580
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784082669642
+      }
+    ],
+    "3.2 Extend `gate` with the RESOLVED guard and review-to-fix binding": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659426
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784082674469
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784083373198
+      }
+    ],
+    "3.3 Implement round-cap counting and PARKED_FOR_HUMAN routing": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659479
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784083378179
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084007721
+      }
+    ],
+    "3.4 Write property test: verdict fails closed for all non-PASS inputs": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659532
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084019410
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084455131
+      }
+    ],
+    "3.5 Write unit tests for the RESOLVED guard edge cases": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659586
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084460100
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084818617
+      }
+    ],
+    "4. Checkpoint - engine core complete": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659640
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084825675
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084830816
+      }
+    ],
+    "5.1 Implement the stdio MCP server": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659692
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084836757
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784087054267
+      }
+    ],
+    "5.2 Write MCP handler tests asserting parity with the core": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659744
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784087059240
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784087871812
+      }
+    ],
+    "5.3 Write an MCP smoke test": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659800
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784087876712
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784088106096
+      }
+    ],
+    "6.1 Create the vulnerable sample service and commit the planted defect": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659853
+      },
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784088111269
+      }
+    ],
+    "6.2 Seed log files reflecting the defect": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659903
+      }
+    ],
+    "6.3 Add a failing reproduction test": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078659958
+      }
+    ],
+    "7.1 Author the SRE agent config and prompt": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660013
+      }
+    ],
+    "7.2 Write a config-lint test for SRE tool scoping": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660070
+      }
+    ],
+    "8.1 Author the Reviewer agent config and prompt": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660142
+      }
+    ],
+    "8.2 Implement the guardrail hook shelling into the CLI": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660200
+      }
+    ],
+    "8.3 Write guardrail hook tests for every failure mode": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660252
+      }
+    ],
+    "8.4 Write a config-lint test for Reviewer scoping and model family": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660303
+      }
+    ],
+    "9.1 Author the Scribe agent config and prompt": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660358
+      }
+    ],
+    "9.2 Write a postmortem validator test and append-only check": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660411
+      }
+    ],
+    "10.1 Author the incident-lifecycle prompts": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660465
+      }
+    ],
+    "10.2 Write a test that RESOLVED opens only after HITL cleared + PASS": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660520
+      }
+    ],
+    "11.1 Author POWER.md and mcp.json": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660570
+      }
+    ],
+    "11.2 Implement onboarding (dependency check + scaffold + hook install)": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660620
+      }
+    ],
+    "11.3 Write a lint test for POWER.md and mcp.json": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660671
+      }
+    ],
+    "12. Checkpoint - agents, hook, and packaging complete": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660728
+      }
+    ],
+    "13.1 Verify install from local folder and public GitHub": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660776
+      }
+    ],
+    "13.2 Write a multiplayer attribution test": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660850
+      }
+    ],
+    "14.1 Implement the golden-path integration test": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660898
+      }
+    ],
+    "14.2 Write the README and Kiro/agentic explanation": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660947
+      }
+    ],
+    "14.3 Add the environment variable examples": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078660997
+      }
+    ],
+    "15. Final checkpoint - full flow demoable": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078661046
+      }
+    ],
+    "16. (Optional) Build the read-only room dashboard": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784078661098
+      }
+    ],
+    "1. Scaffold the engine, shared schema module, and `validate` command": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784081028865
+      }
+    ],
+    "2. Implement the state-machine transition table and `gate` transition legality": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784082067735
+      }
+    ],
+    "3. Implement verdict parsing, the Non_Author_Rule, fix-version binding, round-cap counting, and the RESOLVED guard": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784084818679
+      }
+    ],
+    "5. Wrap the engine core as an MCP server": [
+      {
+        "executionId": "07dc67f2-be97-44e6-a358-e6ffb03b44c0",
+        "chatSessionId": "sess_66a1e6ed-6a8a-4d85-8933-91b22bab2855",
+        "timestamp": 1784088106168
+      }
+    ]
+  }
+}

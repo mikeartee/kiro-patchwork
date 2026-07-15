@@ -1,0 +1,3 @@
+# Keeps the engine/core directory under version control.
+# The shared schema parsers and the validate/gate/verdict command functions
+# are added here in tasks 1.2 and 1.3.

@@ -1,0 +1,3 @@
+# Keeps the engine/test directory under version control.
+# Unit and property tests (node:test + node:assert) are added here starting in
+# task 1.5.
