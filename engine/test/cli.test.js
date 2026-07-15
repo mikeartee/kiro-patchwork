@@ -84,7 +84,36 @@ function writeValidWorkspace(workspaceDir) {
   );
   writeFile(workspaceDir, path.join(incRel, 'review.md'), 'VERDICT: PASS\n');
   writeFile(workspaceDir, path.join(incRel, 'decision-log.md'), '# Decision Log\n');
-  writeFile(workspaceDir, path.join(incRel, 'postmortem.md'), '# Post-mortem\n');
+  writeFile(
+    workspaceDir,
+    path.join(incRel, 'postmortem.md'),
+    [
+      `# Post-mortem - ${INC}`,
+      '',
+      `Incident: ${INC}`,
+      '',
+      '## Root cause',
+      '',
+      'Null reference in coupon stacking path.',
+      '',
+      '## Applied fix',
+      '',
+      'Added tier data to the coupon catalogue.',
+      '',
+      '## Review outcome',
+      '',
+      'Reviewer passed the fix.',
+      '',
+      '## Source artifacts',
+      '',
+      '- incident.md',
+      '- analysis.md',
+      '- fix-proposal.md',
+      '- review.md',
+      '- decision-log.md',
+      '',
+    ].join('\n'),
+  );
 }
 
 /**

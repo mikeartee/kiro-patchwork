@@ -18,8 +18,7 @@
 //
 // _Requirements: 17.1, 17.2, 17.3_
 
-import { parseIncident, parseBoardEntry, isSchemaError } from './schema.js';
-import { RESOLUTION_ARTIFACTS } from './validate.js';
+import { parseIncident, parseBoardEntry, isSchemaError, RESOLUTION_ARTIFACTS } from './schema.js';
 
 // How many of the most-recent board entries the dashboard surfaces. The Board
 // is chronological (Requirement 2.5), so "recent" is simply the tail of the

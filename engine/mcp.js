@@ -30,10 +30,8 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 
 import { validate } from './core/validate.js';
-import { gate } from './core/gate.js';
-import { verdict } from './core/verdict.js';
-import { parseIncident, isSchemaError } from './core/schema.js';
 import { readWorkspace, DEFAULT_WORKSPACE } from './read-workspace.js';
+import { resolveAndGate, resolveAndVerdict } from './resolve-incident.js';
 
 // The registered MCP server name. This is a STABLE identifier that tasks 11.1
 // (POWER.md) and 11.3 (mcp.json lint) MUST match verbatim — the server name in
@@ -105,34 +103,8 @@ export function runGate(args = {}) {
   const workspaceDir = resolveWorkspaceDir(args.workspace);
   const snapshot = readWorkspace(workspaceDir);
 
-  const incidentFiles =
-    snapshot.incidents && snapshot.incidents[incidentId]
-      ? snapshot.incidents[incidentId]
-      : null;
-
-  if (incidentFiles === null) {
-    return {
-      allowed: false,
-      reason: `incident "${incidentId}" not found in workspace "${workspaceDir}"`,
-    };
-  }
-  if (typeof incidentFiles['incident.md'] !== 'string') {
-    return {
-      allowed: false,
-      reason: `incident "${incidentId}" is missing incident.md`,
-    };
-  }
-  const parsed = parseIncident(incidentFiles['incident.md']);
-  if (isSchemaError(parsed)) {
-    return {
-      allowed: false,
-      reason: `incident "${incidentId}" has invalid frontmatter: ${parsed.message}`,
-    };
-  }
-
-  const from = parsed.status;
-  // Core call — identical to the CLI's `gate` invocation.
-  return gate(snapshot, { incidentId, from, to });
+  const { result } = resolveAndGate(snapshot, { incidentId, to, workspaceDir });
+  return result;
 }
 
 /**
@@ -148,16 +120,7 @@ export function runVerdict(args = {}) {
   const workspaceDir = resolveWorkspaceDir(args.workspace);
   const snapshot = readWorkspace(workspaceDir);
 
-  const incidentFiles =
-    snapshot.incidents && snapshot.incidents[incidentId]
-      ? snapshot.incidents[incidentId]
-      : null;
-  const reviewText =
-    incidentFiles && typeof incidentFiles['review.md'] === 'string'
-      ? incidentFiles['review.md']
-      : undefined;
-
-  return verdict(reviewText);
+  return resolveAndVerdict(snapshot, incidentId);
 }
 
 /**
